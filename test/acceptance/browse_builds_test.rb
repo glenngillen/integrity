@@ -68,11 +68,12 @@ class BrowseBuildsTest < Test::Unit::AcceptanceTestCase
   end
 
   scenario "Browsing to an individual build page" do
-    Project.gen(:integrity, :builds => [
+    builds = [
       Build.gen(:successful, :commit => Commit.gen(:identifier => "87e673a")),
       Build.gen(:pending, :commit => Commit.gen(:identifier => "7fee3f0")),
       Build.gen(:pending)
-    ])
+    ]
+    Project.gen(:integrity, :builds => builds, :last_build => builds.last)
 
     visit "/integrity"
     click_link(/Build 87e673a/)
