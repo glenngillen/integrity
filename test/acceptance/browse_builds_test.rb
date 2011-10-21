@@ -21,10 +21,11 @@ class BrowseBuildsTest < Test::Unit::AcceptanceTestCase
   end
 
   scenario "Browsing to a project with all kind of builds" do
-    Project.gen(:integrity, :builds => \
-                2.of { Build.gen(:failed) }     +
-                2.of { Build.gen(:pending) }    +
-                3.of { Build.gen(:successful) })
+    builds = 
+      2.of { Build.gen(:failed) }     +
+      2.of { Build.gen(:pending) }    +
+      3.of { Build.gen(:successful) }
+    Project.gen(:integrity, :builds => builds, :last_build => builds.last)
 
     visit "/integrity"
 
@@ -55,7 +56,7 @@ class BrowseBuildsTest < Test::Unit::AcceptanceTestCase
       :message => "No more pending tests :)",
       :committed_at => Time.mktime(2008, 12, 15, 18)
     )
-    p = Project.gen(:integrity, :builds => [build])
+    p = Project.gen(:integrity, :builds => [build], :last_build => build)
 
     visit "/integrity"
 
