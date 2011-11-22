@@ -22,8 +22,15 @@ module Integrity
     belongs_to :project
     has 1,     :commit
 
+    after :create do
+      project.raise_on_save_failure = true
+      project.update(:last_build_id => id)
+    end
+
     before :destroy do
-      commit.destroy!
+      if commit
+        commit.destroy!
+      end
     end
 
     def run
@@ -67,10 +74,18 @@ module Integrity
     end
 
     def sha1
-      commit.identifier
+      if commit
+        commit.identifier
+      else
+        '(commit is missing)'
+      end
     end
 
     def sha1_short
+      unless commit
+        return '(commit is missing)'
+      end
+
       unless sha1
         return "This commit"
       end
@@ -79,15 +94,37 @@ module Integrity
     end
 
     def message
-      commit.message || "message not loaded"
+      if commit
+        commit.message || "message not loaded"
+      else
+        '(commit is missing)'
+      end
+    end
+
+    def full_message
+      if commit
+        # commit.message fallback is here because we don't have migrations (yet?)
+        commit.full_message || commit.message || "message not loaded"
+      else
+        '(commit is missing)'
+      end
     end
 
     def author
-      (commit.author || Author.unknown).name
+      if commit
+        (commit.author || Author.unknown).name
+      else
+        '(commit is missing)'
+      end
     end
 
     def committed_at
-      commit.committed_at
+      if commit
+        commit.committed_at
+      else
+        # UI expects a date, give it to it
+        Time.utc(1970)
+      end
     end
 
     def status

@@ -9,7 +9,8 @@
       Rebuild
 
 %blockquote
-  %p&= build.message
+  %p
+    #{h(build.full_message).gsub("\n", '<br />')}
   %p.meta<
     %span.who<
       &== by: #{build.author}

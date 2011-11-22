@@ -1,3 +1,4 @@
+require "helper"
 require "helper/acceptance/textfile_notifier"
 
 class NotifierTest < IntegrityTest
@@ -29,6 +30,7 @@ class NotifierTest < IntegrityTest
 
     assert_no_change(project.notifiers, :count) {
       project.notifiers << Notifier.gen(:irc, :config => "foo")
+      # returns false, does not save project
       project.save
     }
   end
