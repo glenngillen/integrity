@@ -8,14 +8,18 @@ gem "dm-types",              "1.0.2"
 gem "dm-migrations",         "1.0.2"
 gem "dm-aggregates",         "1.0.2"
 gem "dm-validations",        "1.0.2"
-gem "bcrypt-ruby",           "2.1.4"
-gem "uuidtools",             "2.1.1"
-gem "extlib",                "0.9.15"
-gem "data_objects",          "0.10.2"
-gem "do_sqlite3",            "0.10.2"
+if RUBY_VERSION < '1.9'
+  # 0.10.7 seems to work fine, at least for tests,
+  # but produces a huge amount of spam due to:
+  # https://github.com/datamapper/dm-do-adapter/issues/4
+  gem "do_sqlite3",          "0.10.2"
+else
+  # do_sqlite3 < 0.10.7 uses DateTime.new!, which was removed
+  # in ruby 1.9 somewhere before 1.9.3-preview1.
+  gem "do_sqlite3",          "0.10.7"
+end
 gem "rake",                  "0.8.7"
 gem "haml",                  "3.0.25"
-gem "thor",                  "0.14.6"
 gem "addressable",           "2.2.2"
 gem "json",                  "1.4.6"
 gem "sinatra",               "1.1.2"
@@ -58,6 +62,7 @@ gem "rack",                  "1.1.0"
 # = Development dependencies.
 group :test do
   gem "ruby-debug",      "0.10.4" if RUBY_VERSION < '1.9'
+  gem "extlib",          "0.9.15"
   gem "sqlite3-ruby",    "1.3.2"
   gem "delayed_job",     "2.1.2"
   gem "activerecord",    "~> 3.0.3"
