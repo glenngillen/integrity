@@ -1,16 +1,16 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (3.0.3)
-      activesupport (= 3.0.3)
+    activemodel (3.0.11)
+      activesupport (= 3.0.11)
       builder (~> 2.1.2)
-      i18n (~> 0.4)
-    activerecord (3.0.3)
-      activemodel (= 3.0.3)
-      activesupport (= 3.0.3)
-      arel (~> 2.0.2)
+      i18n (~> 0.5.0)
+    activerecord (3.0.11)
+      activemodel (= 3.0.11)
+      activesupport (= 3.0.11)
+      arel (~> 2.0.10)
       tzinfo (~> 0.3.23)
-    activesupport (3.0.3)
+    activesupport (3.0.11)
     addressable (2.2.2)
     ansi (1.4.1)
     arel (2.0.10)
@@ -22,6 +22,7 @@ GEM
       nap (~> 0.3)
     builder (2.1.2)
     bunny (0.6.0)
+    chronic_duration (0.8.0)
     columnize (0.3.4)
     contest (0.1.2)
     crack (0.3.1)
@@ -125,12 +126,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (= 3.0.3)
+  activerecord (~> 3.0.3)
   addressable (= 2.2.2)
   bcat (= 0.5.2)
   bcrypt-ruby (= 2.1.4)
   broach (= 0.2.1)
   bunny (= 0.6.0)
+  chronic_duration (= 0.8.0)
   contest (= 0.1.2)
   data_objects (= 0.10.2)
   delayed_job (= 2.1.2)
