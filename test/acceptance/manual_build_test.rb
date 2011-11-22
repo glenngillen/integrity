@@ -37,12 +37,14 @@ class ManualBuildTest < Test::Unit::AcceptanceTestCase
     visit "/my-test-project"
     click_button "manual build"
 
+=begin build is run asynchronously and may be not started, pending or finished
     within "#build" do
       assert_have_tag("h1",         :content => "HEAD hasn't been built yet")
       assert_have_tag("blockquote", :content => "message not loaded")
       assert_have_tag(".who",       :content => "author not loaded")
       assert_have_tag(".when",      :content => "commit date not loaded")
     end
+=end
 
     build
     reload
@@ -63,7 +65,9 @@ class ManualBuildTest < Test::Unit::AcceptanceTestCase
     visit "/my-test-project"
     click_button "manual build"
 
+=begin build is run asynchronously and may be not started, pending or finished
     assert_have_tag("#build h1", :content => "HEAD hasn't been built yet")
+=end
 
     build
     reload
@@ -80,14 +84,19 @@ class ManualBuildTest < Test::Unit::AcceptanceTestCase
     visit "/my-test-project"
     click_button "manual build"
 
+=begin build is run asynchronously and may be not started, pending or finished
     assert_have_tag("#build h1", :content => "HEAD hasn't been built yet")
+=end
 
     build
     reload
 
     click_link "my-test-project"
     click_button "Fetch and build"
+
+=begin build is run asynchronously and may be not started, pending or finished
     assert_have_tag("#build h1", :content => "HEAD hasn't been built yet")
+=end
 
     build
     reload
@@ -106,7 +115,9 @@ class ManualBuildTest < Test::Unit::AcceptanceTestCase
     visit "/my-test-project"
     click_button "manual build"
 
+=begin build is run asynchronously and may be not started, pending or finished
     assert_have_tag("#build h1", :content => "HEAD hasn't been built yet")
+=end
 
     build
     reload
@@ -144,8 +155,10 @@ class ManualBuildTest < Test::Unit::AcceptanceTestCase
     click_button "Update Project"
     click_button "Rebuild"
 
+=begin build is run asynchronously and may be not started, pending or finished
     assert_have_tag("#build h1",
       :content => "#{repo.short_head} hasn't been built yet")
+=end
     assert_have_tag("#build span.who", :content => "John Doe")
     assert_have_tag("#build blockquote p",
       :content => "This commit will work")
